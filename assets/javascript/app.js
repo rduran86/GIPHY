@@ -1,17 +1,14 @@
-// ====================== Poppulate buttons dinamycally ===================================    
+// ====================== Poppulate buttons dinamycally ==========================================    
 
 $("document").ready(function() {
 
-    var topics = ["C++", "semiconductors", "Python", "IoT", "embedded systems", "Traveling"]
+    var topics = ["travel", "dining", "cycling", "IoT", "computer science", "science"]
 
     for (var i = 0; i < topics.length; i++) {
-
-        // Step 3: uncomment the for loop above and the closing curly bracket below.
         console.log(topics[i]);
-        // ============= put step 3 in between these dashes ======================
-        // Make a div with jQuery and store it in a variable named animalDiv.
+        // Make a div with jQuery and store it in a variable named topicsButton
         var topicsButton = $("<div>").addClass("btn btn-info").text(topics[i]).css("margin", "10px");
-        // Prepend the animalDiv variable to the element with an id of gifs-appear-here.
+        // append the animalDiv variable to the element with an id of gifs-appear-here.
         $("#buttons").append(topicsButton);
         // ==================================
     }
@@ -20,12 +17,10 @@ $("document").ready(function() {
         console.log("submit");
         console.log($("#text").val())
         var newTopicButton = $("<div>").addClass("btn btn-info").text($("#text").val()).css("margin", "10px");
-        console.log(newTopicButton);
         $("#buttons").append(newTopicButton);
     });
 
-
-    // //==================================================================================================
+    //=========================== Search for the images on the GIPHY API ===============================
     $(".btn").on("click", function() {
         event.preventDefault();
         var topic = $(this).text();
@@ -40,9 +35,9 @@ $("document").ready(function() {
 
 
 
-            // =============== put step 2 in between these dashes ==================
+            // ============================ When response is received populate giphs ============================
             var results = response.data
-                // ====================================================================
+                // ==================================================================================================
 
             for (var i = 0; i < results.length; i++) {
 
@@ -51,44 +46,42 @@ $("document").ready(function() {
                 // Make a paragraph tag with jQuery and store it in a variable named p.
                 var p = $("<p>");
                 // Set the inner text of the paragraph to the rating   of the image in results[i].
-                p.text("Rated: " + results[i].rating);
-                // Make an image tag with jQuery and store it in a variable named animalImage.
+                p.text("Rated: " + results[i].rating).addClass("text-center");
+                // Make an image tag with jQuery and store it in a variable named topiclImage.
                 topicImage = $("<img>");
-                // Set the image's src to results[i]'s fixed_height.url.
-
+                // Set the image's src to results[i]'s fixed_height_small_still.url.
                 topicImage.attr("src", results[i].images.fixed_height_small_still.url);
-                // console.log(topicImage.attr("src"));
-                topicImage.attr("data-state", "still");
-                topicImage.attr("data-anmiate", results[i].images.fixed_height_small.url);
-                console.log(topicImage.attr("data-anmiate"));
+                // Add data-state, data-animate, data-still to the img 
+                topicImage.attr("data-state", "animate");
+                topicImage.attr("data-animate", results[i].images.fixed_height_small.url);
                 topicImage.attr("data-still", results[i].images.fixed_height_small_still.url);
+                //Add class gif to the img 
                 topicImage.addClass("gif");
-                // console.log(topicImage);
+                //Append the imag to the topicDiv
                 topicDiv.append(topicImage);
-                // Append the p variable to the animalDiv variable.
+                // Append the p variable to the topicDiv variable.
                 topicDiv.append(p);
-                // Append the animalImage variable to the animalDiv variable.
-
-                console.log(topicDiv);
                 // Prepend the animalDiv variable to the element with an id of gifs-appear-here.
                 $("#giphs-appear-here").prepend(topicDiv);
-                // ===================================================================
             }
 
-            //Change the state of the gifs on click
+            // ============================= Change the state of the gifs on click ===========================
             $(".gif").on('click', function() {
 
                 var state = $(this).attr("data-state");
                 console.log(state);
 
                 if (state === "still") {
-                    $(this).attr("src", $(this).data("animate"));
+                    //set the src to the value contained in data-animate
+                    $(this).attr("src", $(this).attr("data-animate"));
+                    //set the data-state to animate
                     $(this).attr("data-state", "anmiate");
                 } else {
+                    //set the src to the value contained in data-still
                     $(this).attr("src", $(this).data("still"))
-                    console.log($(this).attr("src"));
+                        //set the data-state to animate
                     $(this).attr("data-state", "still");
-                    console.log($(this).attr("data-state"));
+
                 }
 
 
