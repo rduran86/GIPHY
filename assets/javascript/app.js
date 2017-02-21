@@ -7,7 +7,7 @@ $("document").ready(function() {
     for (var i = 0; i < topics.length; i++) {
         console.log(topics[i]);
         // Make a div with jQuery and store it in a variable named topicsButton
-        var topicsButton = $("<div>").addClass("btn btn-info").text(topics[i]).css("margin", "10px");
+        var topicsButton = $("<div>").addClass("btn btn-default").text(topics[i]).css("margin", "10px");
         // append the animalDiv variable to the element with an id of gifs-appear-here.
         $("#buttons").append(topicsButton);
         // ==================================
@@ -16,12 +16,12 @@ $("document").ready(function() {
     $("#submit").on('click', function() {
         console.log("submit");
         console.log($("#text").val())
-        var newTopicButton = $("<div>").addClass("btn btn-info").text($("#text").val()).css("margin", "10px");
+        var newTopicButton = $("<div>").addClass("btn btn-default").text($("#text").val()).css("margin", "10px");
         $("#buttons").append(newTopicButton);
     });
 
     //=========================== Search for the images on the GIPHY API ===============================
-    $(".btn").on("click", function() {
+    $("#buttons").on("click", ".btn", function() {
         event.preventDefault();
         var topic = $(this).text();
         console.log(this);
