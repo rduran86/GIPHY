@@ -2,22 +2,46 @@
 
 $("document").ready(function() {
 
-    var topics = ["travel", "dining", "cycling", "IoT", "computer science", "science"]
+    var topics = ["travel", "dining", "cycling", "IoT", "computer science", "science", "technology", "hack"]
 
-    for (var i = 0; i < topics.length; i++) {
-        console.log(topics[i]);
-        // Make a div with jQuery and store it in a variable named topicsButton
-        var topicsButton = $("<div>").addClass("btn btn-default").text(topics[i]).css("margin", "10px");
-        // append the animalDiv variable to the element with an id of gifs-appear-here.
-        $("#buttons").append(topicsButton);
-        // ==================================
+
+    function printButtons(topics) {
+        for (var i = 0; i < topics.length; i++) {
+            console.log(topics[i]);
+            // Make a div with jQuery and store it in a variable named topicsButton
+            var topicsButton = $("<div>").addClass("btn btn-default").text(topics[i]).css("margin", "10px");
+            // append the animalDiv variable to the element with an id of gifs-appear-here.
+            $("#buttons").append(topicsButton);
+            // ==================================
+        }
     }
 
+    // call the printButtons function with the original array
+    printButtons(topics);
+
+    //if submit button is clicked then the text of the form will become a new button
     $("#submit").on('click', function() {
-        console.log("submit");
-        console.log($("#text").val())
-        var newTopicButton = $("<div>").addClass("btn btn-default").text($("#text").val()).css("margin", "10px");
-        $("#buttons").append(newTopicButton);
+        //clear the previous buttons not to clutter the button area.
+        $("#buttons").empty();
+        // get the value on the input field and assign it to newTopic variable
+        var newTopic = $("#text").val();
+        // add the new topic vatiable to the topics array
+        topics.push(newTopic);
+        // append an h3 element to the buttons id since it was cleared before. 
+        $("#buttons").append("<h3 class = 'text-center'> Topics click a button to display related giphs </h3>");
+        // call the printButtons function to update the buttons
+        printButtons(topics);
+        // clear the text on the input field 
+        $("#text").val(" ");
+
+    });
+
+    //=============================================== clear giphs ==================================
+    $("#clear").on('click', function() {
+
+        $(".raiting").remove();
+        $(".gif").remove();
+
     });
 
     //=========================== Search for the images on the GIPHY API ===============================
@@ -46,7 +70,7 @@ $("document").ready(function() {
                 // Make a paragraph tag with jQuery and store it in a variable named p.
                 var p = $("<p>");
                 // Set the inner text of the paragraph to the rating   of the image in results[i].
-                p.text("Rated: " + results[i].rating).addClass("text-center");
+                p.text("Rated: " + results[i].rating).addClass("text-center raiting");
                 // Make an image tag with jQuery and store it in a variable named topiclImage.
                 topicImage = $("<img>");
                 // Set the image's src to results[i]'s fixed_height_small_still.url.
@@ -84,12 +108,11 @@ $("document").ready(function() {
 
                 }
 
-
-
             });
 
         });
 
 
     });
+
 });
